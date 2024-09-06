@@ -4,6 +4,7 @@ import com.example.day23SpringBoot.Exception.ResourceNotFoundException;
 import com.example.day23SpringBoot.model.EmployeeModel;
 import com.example.day23SpringBoot.repository.EmployeeRepository;
 import com.example.day23SpringBoot.service.EmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
@@ -23,12 +24,12 @@ public class EmployeeController {
     public EmployeeRepository repository;
 
     @PostMapping("/addEmployee")
-    public EmployeeModel createEmployee(@RequestBody EmployeeModel employeeModel){
+    public EmployeeModel createEmployee(@Valid @RequestBody EmployeeModel employeeModel){
         return service.createEmployee(employeeModel);
     }
 
     @PutMapping("/Emp/{id}")
-    public ResponseEntity<EmployeeModel> updateEmployee(@PathVariable Long id, @RequestBody EmployeeModel employeeDetails) {
+    public ResponseEntity<EmployeeModel> updateEmployee(@Valid @PathVariable Long id, @RequestBody EmployeeModel employeeDetails) {
         EmployeeModel employee = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
 
